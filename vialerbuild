@@ -16,11 +16,11 @@ export USE_ARCHS=()
 
 export DOWNLOAD_PJSIP_SRC=true
 export CLEAN_PJSIP_SRC=true
-export SSL_SUPPORT=false
-export OPUS_SUPPORT=false
-export H264_SUPPORT=false
+export SSL_SUPPORT=true
+export OPUS_SUPPORT=true
+export H264_SUPPORT=true
 export INDEPENDENT_WEBRTC=false
-export ENABLE_ZRTP=false
+export ENABLE_ZRTP=true
 export HAS_BITCODE=true
 export HAS_IPV6=false
 export SHOW_HELP=false
@@ -465,6 +465,8 @@ function config_site () {
     fi
 
     echo "#define PJ_CONFIG_IPHONE 1" >> $PJSIP_CONFIG_SITE_H
+echo "#define PJ_HAS_SSL_SOCK 1" >> $PJSIP_CONFIG_SITE_H
+echo "#define PJ_SSL_SOCK_IMP PJ_SSL_SOCK_IMP_APPLE" >> $PJSIP_CONFIG_SITE_H
 
     if [ $INDEPENDENT_WEBRTC = true ]; then
         echo "#define PJMEDIA_HAS_SRTP 0" >> $PJSIP_CONFIG_SITE_H
@@ -560,6 +562,7 @@ function _build () {
         configure="$configure --with-ssl=${SSL_BUILD_DIR}"
         export CFLAGS="${CFLAGS} -I${SSL_BUILD_DIR}/include"
         export LDFLAGS="${LDFLAGS} -L${SSL_BUILD_DIR}/lib"
+	export LDFLAGS += -framework Network -framework Security
     fi
 
     if [ $OPUS_SUPPORT = true ]; then
