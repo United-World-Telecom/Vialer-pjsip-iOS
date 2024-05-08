@@ -467,6 +467,7 @@ function config_site () {
     echo "#define PJ_CONFIG_IPHONE 1" >> $PJSIP_CONFIG_SITE_H
 echo "#define PJ_HAS_SSL_SOCK 1" >> $PJSIP_CONFIG_SITE_H
 echo "#define PJ_SSL_SOCK_IMP PJ_SSL_SOCK_IMP_APPLE" >> $PJSIP_CONFIG_SITE_H
+echo "#define PJSIP_HAS_TLS_TRANSPORT 1" >> $PJSIP_CONFIG_SITE_H
 
     if [ $INDEPENDENT_WEBRTC = true ]; then
         echo "#define PJMEDIA_HAS_SRTP 0" >> $PJSIP_CONFIG_SITE_H
